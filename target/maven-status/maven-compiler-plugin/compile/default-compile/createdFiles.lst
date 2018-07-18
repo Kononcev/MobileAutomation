@@ -1,5 +1,0 @@
-model\MyAnnotation.class
-model\Calculator.class
-driver\PageObject.class
-webelements\Button.class
-webelements\CustomFieldDecorator.class
