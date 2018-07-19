@@ -1,17 +1,20 @@
+import business.CalculatorBO;
 import driver.Driver;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class TestClass {
-   AppiumDriver driver;
+   private AppiumDriver driver;
+   private CalculatorBO calculator;
 
-   @BeforeTest
+   @BeforeClass
    public void setUpDriver() {
       driver = Driver.getInstance();
+      calculator = new CalculatorBO();
    }
 
    @Test
@@ -23,17 +26,8 @@ public class TestClass {
       //((AndroidDriver)driver).startActivity(activity);
       /*driver.get("https://www.google.com/");*/
 
-      WebElement nine = driver.findElement(By.id("com.android.calculator2:id/digit_9"));
-      WebElement three = driver.findElement(By.id("com.android.calculator2:id/digit_3"));
-      WebElement plus = driver.findElement(By.id("com.android.calculator2:id/op_add"));
-      WebElement equals = driver.findElement(By.id("com.android.calculator2:id/eq"));
-      WebElement result = driver.findElement(By.id("com.android.calculator2:id/result"));
-      nine.click();
-      plus.click();
-      three.click();
-      equals.click();
-      System.out.println(result.getText());
-      driver.quit();
+      calculator.performExpression("11+2+3");
+
    }
 
    @AfterClass

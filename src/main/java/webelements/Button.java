@@ -2,18 +2,10 @@ package webelements;
 
 import org.openqa.selenium.WebElement;
 
-public class Button {
-   private WebElement webElement;
+public class Button extends Element{
 
-   public Button() {
-   }
-
-   protected Button(WebElement webElement) {
-      this.webElement = webElement;
-   }
-
-   public boolean isEnabled() {
-      return webElement.isEnabled();
+   public Button(WebElement webElement) {
+      super(webElement);
    }
 
    public void click() {
