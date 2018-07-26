@@ -10,10 +10,21 @@ import java.util.Set;
 public class Configuration {
    private static Properties prop;
    private static Configuration instance;
+   private static String path;
 
    private Configuration() {
       prop = new Properties();
       loadConfigFile();
+   }
+
+   static {
+      loadMainConfigFile();
+      String testType = System.getProperty("testType");
+      if(testType.equals("webView"))
+         path = "src/main/resources/google.properties";
+      else if(testType.equals("native"))
+         path = "src/main/resources/calculator.properties";
+
    }
 
    public static Configuration getInstance() {
@@ -24,18 +35,26 @@ public class Configuration {
    }
 
    private void loadConfigFile() {
-      try (InputStream input = new FileInputStream("src/main/resources/calculator.properties")) {
+      try (InputStream input = new FileInputStream(path)) {
          prop.load(input);
       } catch (IOException ex) {
          ex.printStackTrace();
       }
    }
 
-   public Set<Object> getKeys() {
-      return prop.keySet();
+   private static void loadMainConfigFile() {
+      try (InputStream input = new FileInputStream("src/main/resources/configuration.properties")) {
+         System.getProperties().load(input);
+      } catch (IOException ex) {
+         ex.printStackTrace();
+      }
    }
 
-   public Collection<Object> getValues() {
-      return prop.values();
+   public static Properties getProp(){
+      return prop;
+   }
+
+   public static String getProperty(String key){
+      return prop.getProperty(key);
    }
 }

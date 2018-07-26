@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
@@ -16,10 +17,9 @@ import java.util.stream.IntStream;
 public class Driver {
    private static URL url;
    private static ThreadLocal<AppiumDriver> webDriverThreadLocal = new ThreadLocal<>();
-   private static Configuration configuration;
 
    static {
-      configuration = Configuration.getInstance();
+      Configuration.getInstance();
       try {
          url = new URL("http://127.0.0.1:4723/wd/hub");
       } catch (MalformedURLException e) {
@@ -32,9 +32,9 @@ public class Driver {
 
    private static DesiredCapabilities setCapabilities() {
       DesiredCapabilities capabilities = new DesiredCapabilities();
-      IntStream.range(0, configuration.getKeys().size()).forEach(index->{
-         capabilities.setCapability(configuration.getKeys().toArray()[index].toString(), configuration.getValues().toArray()[index]);
-      });
+      for(Map.Entry<Object, Object> properties: Configuration.getProp().entrySet()){
+         capabilities.setCapability(properties.getKey().toString(), properties.getValue());
+      }
       return capabilities;
    }
 
@@ -54,6 +54,10 @@ public class Driver {
       } finally {
          webDriverThreadLocal.remove();
       }
+   }
+
+   public static void closeApp(){
+      webDriverThreadLocal.get().switchTo().alert().dismiss();
    }
 
 }

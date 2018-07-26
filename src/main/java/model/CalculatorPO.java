@@ -80,4 +80,9 @@ public class CalculatorPO extends PageObject {
          }
       }
    }
+
+   public String getResult(){
+      equals.click();
+      return result.getText();
+   }
 }
