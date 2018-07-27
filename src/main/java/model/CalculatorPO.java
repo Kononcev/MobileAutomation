@@ -1,9 +1,12 @@
 package model;
 
-import business.CalculatorBO;
+import driver.Driver;
 import driver.PageObject;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import webelements.Button;
 
 import java.lang.reflect.Field;
@@ -44,13 +47,13 @@ public class CalculatorPO extends PageObject {
    @FindBy(id = "com.android.calculator2:id/op_add")
    @MyAnnotation(value = '+')
    private Button plus;
-   @FindBy(id = "\tcom.android.calculator2:id/op_sub")
+   @FindBy(id = "com.android.calculator2:id/op_sub")
    @MyAnnotation(value = '-')
    private Button minus;
    @FindBy(id = "com.android.calculator2:id/eq")
    private Button equals;
    @FindBy(id = "com.android.calculator2:id/result")
-   private WebElement result;
+   private Button result;
    @FindBy(id = "com.android.calculator2:id/dec_point")
    private Button dot;
    @FindBy(id = "com.android.calculator2:id/op_mul")
@@ -81,8 +84,9 @@ public class CalculatorPO extends PageObject {
       }
    }
 
-   public String getResult(){
+   public String getResult() {
       equals.click();
+      new WebDriverWait((Driver.getInstance()), 20).until(ExpectedConditions.visibilityOf(result.getWebElement()));
       return result.getText();
    }
 }

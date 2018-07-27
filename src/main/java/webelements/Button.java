@@ -11,4 +11,9 @@ public class Button extends Element{
    public void click() {
       webElement.click();
    }
+
+   public String getText(){
+
+      return webElement.getText();
+   }
 }

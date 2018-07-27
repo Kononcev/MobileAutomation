@@ -1,22 +1,19 @@
 import business.CalculatorBO;
-import driver.Driver;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class TestClass {
+public class CalculatorTest extends BaseTest {
    private CalculatorBO calculator;
 
-   @BeforeClass
+   @BeforeTest
    public void setUpDriver() {
-      Driver.getInstance();
       calculator = new CalculatorBO();
    }
 
    @Test
-   public void testPlusOperation() throws Exception {
+   public void testPlusOperation(){
       String expression = "11+2=13";
       String result = StringUtils.substringAfter(expression, "=");
       calculator.performExpression(expression);
@@ -29,10 +26,5 @@ public class TestClass {
       String result = StringUtils.substringAfter(expression, "=");
       calculator.performExpression(expression);
       Assert.assertEquals(calculator.getResult(), result, String.format("Minus operation works wrong:\t Expected:%s\tActual:%s", result, calculator.getResult()));
-   }
-
-   @AfterClass
-   public void tearDown() {
-      Driver.dropDriver();
    }
 }

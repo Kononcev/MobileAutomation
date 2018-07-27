@@ -8,4 +8,8 @@ abstract class Element {
    Element(WebElement webElement) {
       this.webElement = webElement;
    }
+
+   public WebElement getWebElement() {
+      return webElement;
+   }
 }
